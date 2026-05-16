@@ -58,4 +58,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Универсальная функция для создания случайных вспыхивающих звезд (Sparkles)
+    const createSparkles = (containerSelector, maxConcurrent, intervalMs) => {
+        const container = document.querySelector(containerSelector);
+        if (!container) return;
+
+        const createSparkle = () => {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            const x = Math.random() * width;
+            const y = Math.random() * height;
+            
+            const duration = 2 + Math.random() * 3;
+            
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            sparkle.style.animationDuration = `${duration}s`;
+            
+            container.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, duration * 1000);
+        };
+
+        // Создаем стартовый объем частиц
+        for(let i = 0; i < maxConcurrent / 2; i++) {
+            setTimeout(createSparkle, Math.random() * 3000);
+        }
+
+        // Генерируем новые с заданным интервалом
+        setInterval(createSparkle, intervalMs);
+    };
+
+    // Для шара (до 20 частиц одновременно, интервал генерации ~180мс)
+    createSparkles('.glowing-orb-container', 20, 180);
+
+    // Для первого экрана Hero (распределяем по всему экрану, до 50 частиц)
+    createSparkles('.hero', 50, 80);
+
 });
