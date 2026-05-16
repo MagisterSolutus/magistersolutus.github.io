@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /css/
+Allow: /js/
+Allow: /img/
+
+Sitemap: https://magistersolutus.github.io/sitemap.xml
